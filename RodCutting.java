@@ -1,16 +1,35 @@
 /**
- * Rod cutting problem described in Chapter 15 of textbook
+ * Rod Cutting
+ * Author: Sihang Li
  */
 public class RodCutting {
-
+	static int q;
+	
   // Do not change the parameters!
   public int rodCuttingRecur(int rodLength, int[] lengthPrices) {
-    return 0;
-  }
+	  if (rodLength==0)
+		  return 0;
+	  q=0;
+	  for (int i=1;i<rodLength-1;i++) {
+		q=Math.max(q,lengthPrices[i]+rodCuttingRecur(rodLength-i,lengthPrices));
+	  }
+	  return q;
+  	  }
+
 
   // Do not change the parameters!
   public int rodCuttingBottomUp(int rodLength, int[] lengthPrices) {
-    return 0;
+	  int r[]=new int[rodLength+1];
+	  int q;
+	  r[0]=0;
+	  for (int j=0;j<rodLength;j++) {
+		  q=0;
+		  for (int i=1;i<j;i++) {
+			  q=Math.max(q, lengthPrices[i]+r[j-i]);
+		  }
+		  r[j]=q;
+	  }
+    return r[rodLength-1];
   }
 
 
@@ -27,7 +46,7 @@ public class RodCutting {
       int maxSell1Bottom = rc.rodCuttingBottomUp(length1, prices1);
       int maxSell2Recur = rc.rodCuttingRecur(length2, prices2);
       int maxSell2Bottom = rc.rodCuttingBottomUp(length2, prices2);
-      System.out.println(maxSell1Recur + " " + maxSell1Bottom);
-      System.out.println(maxSell2Recur + " " + maxSell2Bottom);
+      System.out.println( maxSell1Recur+ " " + maxSell1Bottom);
+      System.out.println( maxSell2Recur+ " " + maxSell2Bottom);
   }
 }
